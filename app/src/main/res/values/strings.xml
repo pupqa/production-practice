@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Manager</string>
+    <string name="text_hello">Привет!</string>
+    <string name="text_welcome_sign_in_up">Заполните Свои Данные Для Дальнейшей Работы С Приложением</string>
+    <string name="text_first_time_question">Еще Нет Профиля?</string>
+    <string name="text_have_account_question">Уже Есть Профиль?</string>
+    <string name="button_login">Войти</string>
+    <string name="clickable_text_create_user">Регистрация</string>
+    <string name="title_registration">Регистрация</string>
+
+    <string name="hint_email">Электронная Почта</string>
+    <string name="hint_email_example">example@gmail.com</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_password_masked">••••••••</string>
+    <string name="hint_name">Ваше имя</string>
+    <string name="hint_generic_placeholder">xxxxxxxx</string>
+
+    <string name="default_web_client_id">897098036218-lgk5uh6ee309qkpk645venfohp90oh3v.apps.googleusercontent.com</string>
+</resources>
