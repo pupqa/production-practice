@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,6 +48,7 @@ fun EmployedInfoDialog(workstation: Workstation, onDismiss: () -> Unit) {
                     fontSize = 32.sp,
                     modifier = Modifier.padding(10.dp),
                     textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium
                 )
                 HorizontalDivider(
                     color = Color.LightGray,
@@ -61,7 +63,8 @@ fun EmployedInfoDialog(workstation: Workstation, onDismiss: () -> Unit) {
                     modifier = Modifier
                         .padding(bottom = 16.dp, top = 20.dp)
                         .fillMaxWidth(),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium
                 )
 
                 Text(
@@ -71,7 +74,8 @@ fun EmployedInfoDialog(workstation: Workstation, onDismiss: () -> Unit) {
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                         .fillMaxWidth(),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium
                 )
 //                Spacer(modifier = Modifier.height(15.dp))
 //                CustomButton(

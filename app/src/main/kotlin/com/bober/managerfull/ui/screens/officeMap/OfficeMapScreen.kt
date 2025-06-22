@@ -7,16 +7,19 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
-import com.bober.managerfull.OfficeMapScreenViewModel
 import com.bober.managerfull.OfficeViewModel
 import com.bober.managerfull.R
 import com.bober.managerfull.model.OperationState
@@ -51,7 +53,7 @@ fun OfficeMapScreen(
     viewModel: OfficeMapScreenViewModel,
     viewModel2: OfficeViewModel,
 ) {
-    var scale by remember { mutableStateOf(1f) }
+    var scale by remember { mutableFloatStateOf(1f) }
     var offset by remember { mutableStateOf(Offset.Zero) }
     val coworking = viewModel.coworking.collectAsState()
     val floorThree = viewModel.floorThree.collectAsState()
@@ -63,7 +65,7 @@ fun OfficeMapScreen(
     var show by remember { mutableStateOf(false) }
     var editName by remember { mutableStateOf("") }
     var editPosition by remember { mutableStateOf("") }
-    val headerHeight = 100.dp
+    val headerHeight = 120.dp
     val pointScale = (1f / scale).coerceIn(0.47f, 2f)
     var selectedWorkstation by remember { mutableStateOf<Workstation?>(null) }
     var selectedWorkstationForEdit by remember { mutableStateOf<Workstation?>(null) }
@@ -101,25 +103,25 @@ fun OfficeMapScreen(
 //        else -> ""
 //    }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.White)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxWidth()
                 .height(headerHeight)
                 .background(Color.Black)
-                .border(
-                    width = 1.5.dp,
-                    color = Color.Black.copy(alpha = 0.8f),
-                )
                 .zIndex(2f),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.BottomCenter
         ) {
+            Spacer(modifier = Modifier.height(32.dp))
             Box(
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(16.dp))
+                    .padding(bottom = 20.dp)
+                    .clip(shape = RoundedCornerShape(2.dp))
                     .background(Color.Black)
                     .border(
                         width = 1.5.dp,
@@ -131,7 +133,8 @@ fun OfficeMapScreen(
                     color = Yellow,
                     fontWeight = FontWeight.Bold,
                     fontSize = 30.sp,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 )
             }
         }

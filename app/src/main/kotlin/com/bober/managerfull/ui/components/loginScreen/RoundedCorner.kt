@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -53,10 +54,10 @@ fun RoundedCorner(
             },
             shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = GrayExtraDark, // White30
-                focusedContainerColor = GrayExtraDark.copy(alpha = 0.9f),  // White40
-                unfocusedIndicatorColor = Color.Transparent, // Убираем нижнее подчеркивание
-                focusedIndicatorColor = Color.Transparent,   // Убираем нижнее подчеркивание
+                unfocusedContainerColor = GrayExtraDark,
+                focusedContainerColor = GrayExtraDark.copy(alpha = 0.9f),
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
                 unfocusedTextColor = Hint.copy(alpha = 0.8f),
                 focusedTextColor = White,
                 unfocusedPlaceholderColor = White.copy(alpha = 0.6f),
@@ -68,7 +69,7 @@ fun RoundedCorner(
                 .height(52.dp)
                 .focusRequester(focusRequester),
             placeholder = {
-                Text(text = label, fontSize = 14.sp)
+                Text(text = label, fontSize = 14.sp, style = MaterialTheme.typography.bodyMedium)
             },
             singleLine = singleLine,
             maxLines = maxLines,

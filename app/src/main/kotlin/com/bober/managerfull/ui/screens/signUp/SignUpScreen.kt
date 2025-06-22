@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -103,18 +104,19 @@ fun SignUpScreen(
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp),
         ) {
-            Spacer(modifier = Modifier.fillMaxHeight(0.05f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.08f))
             Image(
                 painter = painterResource(R.drawable.logo_code_inside_oneline),
                 modifier = Modifier.fillMaxWidth(),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.06f))
 
             Text(
                 text = stringResource(R.string.title_registration),
                 fontSize = 32.sp,
                 color = Color.White,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp)
@@ -125,23 +127,28 @@ fun SignUpScreen(
                 fontSize = 16.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp, bottom = 20.dp)
+                    .padding(top = 10.dp, bottom = 10.dp)
                     .fillMaxWidth()
             )
-            Spacer(modifier = Modifier.fillMaxHeight(0.05f))
+
+            Spacer(modifier = Modifier.fillMaxHeight(0.06f))
+
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = stringResource(R.string.hint_name),
-                    fontSize = 16.sp,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
+                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 10.dp)
                 )
             }
+
             RoundedCorner(
                 text = name,
                 label = stringResource(R.string.hint_generic_placeholder),
@@ -152,6 +159,7 @@ fun SignUpScreen(
                     onNext = { emailFocusRequester.requestFocus() }
                 )
             )
+
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
@@ -160,9 +168,11 @@ fun SignUpScreen(
                     text = stringResource(R.string.hint_email),
                     fontSize = 16.sp,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 10.dp)
                 )
             }
+
             RoundedCorner(
                 text = email,
                 label = stringResource(R.string.hint_email_example),
@@ -173,6 +183,7 @@ fun SignUpScreen(
                     onNext = { passwordFocusRequester.requestFocus() }
                 )
             )
+
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
@@ -181,9 +192,11 @@ fun SignUpScreen(
                     text = stringResource(R.string.hint_password),
                     fontSize = 16.sp,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 20.dp, bottom = 10.dp)
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 10.dp)
                 )
             }
+
             RoundedCornerPassword(
                 text = password,
                 label = stringResource(R.string.hint_password_masked),
@@ -195,13 +208,14 @@ fun SignUpScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             if (errorMessage.isNotEmpty()) {
                 Text(
                     text = errorMessage,
                     color = Color.Red,
                     textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 10.dp)
@@ -226,25 +240,25 @@ fun SignUpScreen(
                 )
 
                 Row(
-                    modifier = Modifier.padding(top = 20.dp),
+                    modifier = Modifier.padding(top = 20.dp, bottom = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
                         text = stringResource(R.string.text_have_account_question),
                         color = Color.White,
+                        style = MaterialTheme.typography.bodyMedium,
                         fontSize = 16.sp
                     )
-
                     Text(
                         text = stringResource(R.string.button_login),
                         color = Yellow,
                         fontSize = 16.sp,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(start = 4.dp)
                             .clickable {
-                                navController.navigate(SignInRoute)
-                            }
+                            navController.navigate(SignInRoute)
+                        }
                     )
                 }
             }

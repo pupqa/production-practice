@@ -38,7 +38,7 @@ fun CustomButton(
             text = title,
             color = Color.Black,
             fontSize = 20.sp,
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium
         )
 
     }

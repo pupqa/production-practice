@@ -1,4 +1,4 @@
-package com.bober.managerfull
+package com.bober.managerfull.ui.screens.officeMap
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

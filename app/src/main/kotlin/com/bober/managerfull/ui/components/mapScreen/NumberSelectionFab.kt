@@ -24,10 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bober.managerfull.model.OperationState
+import com.bober.managerfull.ui.screens.officeMap.OfficeMapScreenViewModel
 import com.bober.managerfull.ui.theme.Gray
 import com.bober.managerfull.ui.theme.Yellow
-import com.bober.managerfull.OfficeMapScreenViewModel
-import com.bober.managerfull.model.OperationState
 
 @Composable
 fun NumberSelectionFab(

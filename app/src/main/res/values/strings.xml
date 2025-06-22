@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Manager</string>
     <string name="text_hello">Привет!</string>
-    <string name="text_welcome_sign_in_up">Заполните Свои Данные Для Дальнейшей Работы С Приложением</string>
-    <string name="text_first_time_question">Еще Нет Профиля?</string>
-    <string name="text_have_account_question">Уже Есть Профиль?</string>
+    <string name="text_welcome_sign_in_up">Заполните свои данные для дальнейшей работы с приложением</string>
+    <string name="text_first_time_question">Еще нет профиля?</string>
+    <string name="text_have_account_question">Уже есть профиль?</string>
     <string name="button_login">Войти</string>
     <string name="clickable_text_create_user">Регистрация</string>
     <string name="title_registration">Регистрация</string>
 
-    <string name="hint_email">Электронная Почта</string>
+    <string name="hint_email">Электронная почта</string>
     <string name="hint_email_example">example@gmail.com</string>
     <string name="hint_password">Пароль</string>
     <string name="hint_password_masked">••••••••</string>

@@ -49,7 +49,6 @@ import com.bober.managerfull.ui.theme.Yellow
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-
 @Composable
 fun SignInScreen(
     navController: NavHostController,
@@ -106,36 +105,37 @@ fun SignInScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.fillMaxHeight(0.05f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.08f))
             Image(
                 painter = painterResource(R.drawable.logo_code_inside_oneline),
                 modifier = Modifier.fillMaxWidth(),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.06f))
 
             Text(
                 text = stringResource(R.string.text_hello),
-                color = Color.White,
                 fontSize = 32.sp,
+                color = Color.White,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 8.dp)
             )
-
 
             Text(
                 text = stringResource(R.string.text_welcome_sign_in_up),
                 fontSize = 16.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 10.dp, bottom = 20.dp)
+                    .padding(top = 10.dp, bottom = 10.dp)
                     .fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+            Spacer(modifier = Modifier.fillMaxHeight(0.06f))
 
             Row(
                 horizontalArrangement = Arrangement.Start,
@@ -144,11 +144,11 @@ fun SignInScreen(
                 Text(
                     text = stringResource(R.string.hint_email),
                     color = Color.White,
-                    textAlign = TextAlign.End,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 10.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(10.dp))
 
             RoundedCorner(
                 text = email,
@@ -161,21 +161,18 @@ fun SignInScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
-
             Row(
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
                     text = stringResource(R.string.hint_password),
-                    color = Color.White,
                     fontSize = 16.sp,
-                    textAlign = TextAlign.Start
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 10.dp)
                 )
             }
-
-            Spacer(modifier = Modifier.height(10.dp))
 
             RoundedCornerPassword(
                 text = password,
@@ -193,10 +190,13 @@ fun SignInScreen(
             if (errorMessage.isNotEmpty()) {
                 Text(
                     text = errorMessage,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.fillMaxWidth()
+                    color = Color.Red,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
                 )
-                Spacer(modifier = Modifier.height(10.dp))
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -232,18 +232,20 @@ fun SignInScreen(
 
                         Row(
                             modifier = Modifier.padding(top = 20.dp),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 text = stringResource(R.string.text_first_time_question),
                                 color = Color.White,
+                                style = MaterialTheme.typography.bodyMedium,
                                 fontSize = 16.sp
                             )
                             Text(
                                 text = stringResource(R.string.clickable_text_create_user),
                                 fontSize = 16.sp,
                                 color = Yellow,
+                                style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.clickable {
                                     navController.navigate(SignUpRoute)
                                 }
