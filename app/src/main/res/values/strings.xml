@@ -2,7 +2,7 @@
     <string name="app_name">Manager</string>
     <string name="text_hello">Привет!</string>
     <string name="text_welcome_sign_in_up">Заполните свои данные для дальнейшей работы с приложением</string>
-    <string name="text_first_time_question">Еще нет профиля?</string>
+    <string name="text_first_time_question">Еще нет профиля?      </string>
     <string name="text_have_account_question">Уже есть профиль?</string>
     <string name="button_login">Войти</string>
     <string name="clickable_text_create_user">Регистрация</string>

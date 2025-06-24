@@ -1,9 +1,11 @@
 //package com.bober.managerfull.network
 //
+//import com.bober.managerfull.model.Wardrobe
 //import com.bober.managerfull.model.Workstation
 //
 //class Util {
 //}
+//
 //fun getCoworkingWorkstations(): List<Workstation> {
 //    return listOf(
 //        Workstation("1", 0.165f, 0.44f, "Сотрудник: Иван Петров", "Должность: Team Lead"),
@@ -15,21 +17,97 @@
 //        Workstation("7", 0.3f, 0.512f, "Сотрудник: Дмитрий Попов", "Должность: Frontend Developer"),
 //        Workstation("8", 0.45f, 0.512f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("9", 0.59f, 0.512f, "Сотрудник: Сергей Федоров", "Должность: DevOps Engineer"),
-//        Workstation("10", 0.744f, 0.512f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("11", 0.31f, 0.35f, "Шкаф с фотоприборами", "фотоаппарат, камера, стенд"),
-//        Workstation("12", 0.25f, 0.59f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("13", 0.31f, 0.59f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("14", 0.446f, 0.59f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("15", 0.505f, 0.59f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("16", 0.632f, 0.59f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("17", 0.69f, 0.59f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("18", 0.69f, 0.641f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("19", 0.632f, 0.641f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("20", 0.505f, 0.641f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("21", 0.446f, 0.641f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("22", 0.31f, 0.641f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("23", 0.25f, 0.641f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("!", 0.1f, 0.27f, "Коворкинг", "Расписание"),
+//        Workstation(
+//            "10",
+//            0.744f,
+//            0.512f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "12",
+//            0.25f,
+//            0.59f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "13",
+//            0.31f,
+//            0.59f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "14",
+//            0.446f,
+//            0.59f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "15",
+//            0.505f,
+//            0.59f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "16",
+//            0.632f,
+//            0.59f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "17",
+//            0.69f,
+//            0.59f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "18",
+//            0.69f,
+//            0.641f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "19",
+//            0.632f,
+//            0.641f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "20",
+//            0.505f,
+//            0.641f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "21",
+//            0.446f,
+//            0.641f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "22",
+//            0.31f,
+//            0.641f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "23",
+//            0.25f,
+//            0.641f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
 //    )
 //
 //}
@@ -42,7 +120,13 @@
 //        Workstation("4", 0.32f, 0.59f, "Сотрудник: Мария Кузнецова", "Должность: QA Engineer"),
 //        Workstation("5", 0.43f, 0.502f, "Сотрудник: Алексей Смирнов", "Должность: UI/UX Designer"),
 //        Workstation("6", 0.43f, 0.532f, "Сотрудник: Елена Васильева", "Должность: Product Manager"),
-//        Workstation("7", 0.43f, 0.562f, "Сотрудник: Дмитрий Попов", "Должность: Frontend Developer"),
+//        Workstation(
+//            "7",
+//            0.43f,
+//            0.562f,
+//            "Сотрудник: Дмитрий Попов",
+//            "Должность: Frontend Developer"
+//        ),
 //        Workstation("8", 0.43f, 0.592f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("9", 0.49f, 0.502f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("10", 0.49f, 0.532f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
@@ -52,22 +136,31 @@
 //        Workstation("14", 0.592f, 0.532f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("15", 0.592f, 0.562f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("16", 0.592f, 0.592f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
-//        Workstation("17", 0.7f, 0.502f, "Шкаф №3", "Радиоприборы"),
-//        Workstation("18", 0.09f, 0.507f, "Шкаф №4", "Документы"),
-//        Workstation("19", 0.32f, 0.39f, "Шкаф №5", "Документы"),
-//        Workstation("!", 0.1f, 0.3f, "3 Этаж", "Расписание"),
 //
 //        )
 //}
+//
 //fun getFloorFourWorkstation(): List<Workstation> {
 //    return listOf(
 //        Workstation("1", 0.018f, 0.48f, "Сотрудник: Иван Петров", "Должность: Team Lead"),
-//        Workstation("2", 0.018f, 0.512f, "Сотрудник: Анна Сидорова", "Должность: Android Developer"),
+//        Workstation(
+//            "2",
+//            0.018f,
+//            0.512f,
+//            "Сотрудник: Анна Сидорова",
+//            "Должность: Android Developer"
+//        ),
 //        Workstation("3", 0.018f, 0.542f, "Сотрудник: Петр Иванов", "Должность: Backend Developer"),
 //        Workstation("4", 0.1f, 0.48f, "Сотрудник: Мария Кузнецова", "Должность: QA Engineer"),
 //        Workstation("5", 0.1f, 0.512f, "Сотрудник: Алексей Смирнов", "Должность: UI/UX Designer"),
 //        Workstation("6", 0.1f, 0.542f, "Сотрудник: Елена Васильева", "Должность: Product Manager"),
-//        Workstation("7", 0.276f, 0.42f, "Сотрудник: Дмитрий Попов", "Должность: Frontend Developer"),
+//        Workstation(
+//            "7",
+//            0.276f,
+//            0.42f,
+//            "Сотрудник: Дмитрий Попов",
+//            "Должность: Frontend Developer"
+//        ),
 //        Workstation("8", 0.213f, 0.51f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("9", 0.213f, 0.54f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("10", 0.31f, 0.51f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
@@ -79,7 +172,6 @@
 //        Workstation("16", 0.48f, 0.479f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("17", 0.48f, 0.508f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("18", 0.48f, 0.537f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
-//        Workstation("19", 0.707f, 0.42f, "Шкаф №5", "Документы"),
 //        Workstation("20", 0.67f, 0.47f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("21", 0.707f, 0.511f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("22", 0.707f, 0.539f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
@@ -89,11 +181,10 @@
 //        Workstation("26", 0.795f, 0.537f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("27", 0.90f, 0.51f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("28", 0.90f, 0.538f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
-//        Workstation("29", 0.84f, 0.42f, "Шкаф №5", "Документы"),
-//        Workstation("!", 0.1f, 0.37f, "4 Этаж", "Расписание"),
 //
 //        )
 //}
+//
 //fun getFloorSixWorkstation(): List<Workstation> {
 //    return listOf(
 //        Workstation("1", 0.035f, 0.431f, "Сотрудник: Иван Петров", "Должность: Team Lead"),
@@ -102,7 +193,13 @@
 //        Workstation("4", 0.23f, 0.546f, "Сотрудник: Мария Кузнецова", "Должность: QA Engineer"),
 //        Workstation("5", 0.31f, 0.5f, "Сотрудник: Алексей Смирнов", "Должность: UI/UX Designer"),
 //        Workstation("6", 0.31f, 0.524f, "Сотрудник: Елена Васильева", "Должность: Product Manager"),
-//        Workstation("7", 0.31f, 0.546f, "Сотрудник: Дмитрий Попов", "Должность: Frontend Developer"),
+//        Workstation(
+//            "7",
+//            0.31f,
+//            0.546f,
+//            "Сотрудник: Дмитрий Попов",
+//            "Должность: Frontend Developer"
+//        ),
 //        Workstation("8", 0.37f, 0.478f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("9", 0.37f, 0.502f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("10", 0.37f, 0.526f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
@@ -133,14 +230,10 @@
 //        Workstation("35", 0.868f, 0.501f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("36", 0.868f, 0.524f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("37", 0.868f, 0.546f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
-//        Workstation("38", 0.914f, 0.505f, "Шкаф №5", "Документы"),
-//        Workstation("39", 0.914f, 0.528f, "Шкаф №5", "Документы"),
-//        Workstation("40", 0.914f, 0.55f, "Шкаф №5", "Документы"),
-//        Workstation("41", 0.888f, 0.43f, "", "Документы"),
-//        Workstation("!", 0.1f, 0.37f, "6 Этаж", "Расписание"),
 //
 //        )
 //}
+//
 //fun getConferenceFourWorkstations(): List<Workstation> {
 //    return listOf(
 //        Workstation("1", 0.464f, 0.43f, "Сотрудник: Петр Иванов", "Должность: Backend Developer"),
@@ -148,14 +241,25 @@
 //        Workstation("3", 0.731f, 0.43f, "Сотрудник: Алексей Смирнов", "Должность: UI/UX Designer"),
 //        Workstation("4", 0.464f, 0.505f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("5", 0.591f, 0.505f, "Сотрудник: Сергей Федоров", "Должность: DevOps Engineer"),
-//        Workstation("6", 0.725f, 0.505f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("7", 0.75f, 0.54f, "Шкаф с фотоприборами", "фотоаппарат, камера, стенд"),
-//        Workstation("8", 0.87f, 0.54f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("!", 0.1f, 0.37f, "Переговорка 4 этаж", "Расписание"),
+//        Workstation(
+//            "6",
+//            0.725f,
+//            0.505f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
+//        Workstation(
+//            "8",
+//            0.87f,
+//            0.54f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
 //
 //        )
 //
 //}
+//
 //fun getConferenceSixWorkstations(): List<Workstation> {
 //    return listOf(
 //        Workstation("1", 0.45f, 0.42f, "Сотрудник: Петр Иванов", "Должность: Backend Developer"),
@@ -163,10 +267,64 @@
 //        Workstation("3", 0.79f, 0.42f, "Сотрудник: Алексей Смирнов", "Должность: UI/UX Designer"),
 //        Workstation("4", 0.45f, 0.522f, "Сотрудник: Ольга Новикова", "Должность: HR Manager"),
 //        Workstation("5", 0.605f, 0.522f, "Сотрудник: Сергей Федоров", "Должность: DevOps Engineer"),
-//        Workstation("6", 0.78f, 0.522f, "Сотрудник: Татьяна Морозова", "Должность: Business Analyst"),
-//        Workstation("7", 0.83f, 0.6f, "Шкаф с фотоприборами", "фотоаппарат, камера, стенд"),
-//        Workstation("!", 0.1f, 0.3f, "Переговорка 6 этаж", "Расписание"),
+//        Workstation(
+//            "6",
+//            0.78f,
+//            0.522f,
+//            "Сотрудник: Татьяна Морозова",
+//            "Должность: Business Analyst"
+//        ),
 //
 //        )
+//
+//}
+//
+//fun getWardrobeSixConferense(): List<Wardrobe> {
+//    return listOf(
+//        Wardrobe("7", 0.83f, 0.6f, "Шкаф с фотоприборами", "фотоаппарат, камера, стенд"),
+//
+//        )
+//
+//}
+//
+//fun getWardrobeFourConferense(): List<Wardrobe> {
+//    return listOf(
+//        Wardrobe("7", 0.75f, 0.54f, "Шкаф с фотоприборами", "фотоаппарат, камера, стенд"),
+//
+//        )
+//
+//}
+//
+//fun getWardrobeSix(): List<Wardrobe> {
+//    return listOf(
+//        Wardrobe("38", 0.914f, 0.505f, "Шкаф №5", "Документы"),
+//        Wardrobe("39", 0.914f, 0.528f, "Шкаф №5", "Документы"),
+//        Wardrobe("40", 0.914f, 0.55f, "Шкаф №5", "Документы"),
+//        Wardrobe("41", 0.888f, 0.43f, "", "Документы"),
+//    )
+//
+//}
+//
+//fun getWardrobeFour(): List<Wardrobe> {
+//    return listOf(
+//        Wardrobe("29", 0.84f, 0.42f, "Шкаф №5", "Документы"),
+//        Wardrobe("19", 0.707f, 0.42f, "Шкаф №5", "Документы"),
+//
+//        )
+//
+//}
+//fun getWardrobeThree(): List<Wardrobe> {
+//    return listOf(
+//        Wardrobe("17", 0.7f, 0.502f, "Шкаф №3", "Радиоприборы"),
+//        Wardrobe("18", 0.09f, 0.507f, "Шкаф №4", "Документы"),
+//        Wardrobe("19", 0.32f, 0.39f, "Шкаф №5", "Документы"),
+//        )
+//
+//}
+//fun getWardrobeCoworking(): List<Wardrobe> {
+//    return listOf(
+//        Wardrobe("11", 0.31f, 0.35f, "Шкаф с фотоприборами", "фотоаппарат, камера, стенд"),
+//
+//    )
 //
 //}
