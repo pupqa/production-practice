@@ -22,13 +22,12 @@ import com.bober.managerfull.ui.theme.Yellow
 fun SearchButton(
     modifier: Modifier = Modifier,
     viewModel: OfficeMapScreenViewModel,
+    onClick: () -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
-
     FloatingActionButton(
-        onClick = { expanded = !expanded },
+        onClick = onClick,
         containerColor = Yellow,
-        modifier = modifier.padding(bottom = 8.dp, start = 8.dp)
+        modifier = modifier.padding(bottom = 20.dp, start = 12.dp)
     ) {
         Icon(
             imageVector = Icons.Default.SavedSearch,
@@ -36,5 +35,4 @@ fun SearchButton(
             tint = Color.Black
         )
     }
-
 }

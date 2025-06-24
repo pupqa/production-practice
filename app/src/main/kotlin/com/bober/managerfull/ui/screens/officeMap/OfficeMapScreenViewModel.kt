@@ -8,6 +8,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bober.managerfull.model.FloorModel
 import com.bober.managerfull.model.FloorModelWardrobe
 import com.bober.managerfull.model.OperationState
+import com.bober.managerfull.model.Wardrobe
+import com.bober.managerfull.model.Workstation
 import com.bober.managerfull.network.WorkstationService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -56,6 +58,9 @@ class OfficeMapScreenViewModel : ViewModel() {
     private val _floorState = MutableStateFlow<OperationState>(OperationState.Coworking)
     val floorState = _floorState.asStateFlow()
 
+    private val _searchResults = MutableStateFlow<List<Any>>(emptyList())
+    val searchResults = _searchResults.asStateFlow()
+
     init {
         loadWorkstations()
         loadWardrobes()
@@ -83,6 +88,57 @@ class OfficeMapScreenViewModel : ViewModel() {
         getFloorSixWardrobe()
         getConferenceFourWardrobe()
         getConferenceSixWardrobe()
+    }
+
+    suspend fun determineFloorForWorkstation(workstationId: String): OperationState {
+        val floorId = WorkstationService().getFloorIdForWorkstation(workstationId)
+        return when (floorId) {
+            "coworking" -> OperationState.Coworking
+            "floor3" -> OperationState.FloorThree
+            "floor4" -> OperationState.FloorFour
+            "floor6" -> OperationState.FloorSix
+            "conference4" -> OperationState.ConferenceFour
+            "conference6" -> OperationState.ConferenceSix
+            else -> OperationState.Coworking
+        }
+    }
+
+    suspend fun determineFloorForWardrobe(wardrobeId: String): OperationState {
+        val floorId = WorkstationService().getFloorIdForWardrobe(wardrobeId)
+        return when (floorId) {
+            "coworking" -> OperationState.Coworking
+            "floor3" -> OperationState.FloorThree
+            "floor4" -> OperationState.FloorFour
+            "floor6" -> OperationState.FloorSix
+            "conference4" -> OperationState.ConferenceFour
+            "conference6" -> OperationState.ConferenceSix
+            else -> OperationState.Coworking
+        }
+    }
+    fun searchItems(query: String) {
+        viewModelScope.launch {
+            try {
+                val allItems = WorkstationService().getAllWorkstationsAndWardrobes()
+                val results = allItems.filter { item ->
+                    when (item) {
+                        is Workstation -> {
+                            item.employeeName.contains(query, ignoreCase = true) ||
+                                    item.position.contains(query, ignoreCase = true) ||
+                                    item.number.contains(query, ignoreCase = true)
+                        }
+                        is Wardrobe -> {
+                            item.wardrobeName.contains(query, ignoreCase = true) ||
+                                    item.content.contains(query, ignoreCase = true)
+                        }
+                        else -> false
+                    }
+                }
+                _searchResults.value = results
+            } catch (e: Exception) {
+                Log.e("OfficeMapVM", "Error searching items", e)
+                _searchResults.value = emptyList()
+            }
+        }
     }
 
     fun getCoworkingWorkstations() {

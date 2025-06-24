@@ -161,6 +161,27 @@ class WorkstationService {
 
     }
 
+    suspend fun getFloorIdForWorkstation(workstationId: String): String {
+        val floors = listOf("coworking", "floor3", "floor4", "floor6", "conference4", "conference6")
+
+        return floors.firstOrNull { floorId ->
+            database.collection(collectionName).document(floorId).get().await()
+                .toObject(FloorModel::class.java)
+                ?.workstations?.any { it.id == workstationId } == true
+        } ?: "coworking"
+    }
+
+    suspend fun getFloorIdForWardrobe(wardrobeId: String): String {
+        val floors = listOf("coworking", "floor3", "floor4", "floor6", "conference4", "conference6")
+
+        return floors.firstOrNull { floorId ->
+            database.collection(collectionName2).document(floorId).get().await()
+                .toObject(FloorModelWardrobe::class.java)
+                ?.wardrobe?.any { it.id == wardrobeId } == true
+        } ?: "coworking"
+    }
+
+
     suspend fun updateWorkstation(
         floorId: String,
         workstationId: String,
@@ -233,5 +254,25 @@ class WorkstationService {
         }
 
         floorRef.update("wardrobe", updatedWardrobes).await()
+    }
+    suspend fun getAllWorkstationsAndWardrobes(): List<Any> {
+        val allItems = mutableListOf<Any>()
+
+        // Получаем все рабочие места
+        val floors = listOf(
+            "coworking", "floor3", "floor4", "floor6", "conference4", "conference6"
+        )
+
+        floors.forEach { floorId ->
+            val floor = database.collection(collectionName).document(floorId).get().await()
+                .toObject(FloorModel::class.java)
+            floor?.workstations?.let { allItems.addAll(it) }
+
+            val wardrobeFloor = database.collection(collectionName2).document(floorId).get().await()
+                .toObject(FloorModelWardrobe::class.java)
+            wardrobeFloor?.wardrobe?.let { allItems.addAll(it) }
+        }
+
+        return allItems
     }
 }

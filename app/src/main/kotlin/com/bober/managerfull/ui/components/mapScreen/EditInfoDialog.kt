@@ -96,16 +96,7 @@ fun EditInfoDialog(
                         onDescription(it)
                     }
                 )
-                Spacer(modifier = Modifier.height(10.dp))
 
-                TextFields(
-                    value = number.value,
-                    text = "Инвентарный номер",
-                    onvalChange = {
-                        number.value = it
-                        onData(it)
-                    }
-                )
                 Spacer(modifier = Modifier.height(15.dp))
                 CustomButton(
                     title = "Сохранить",

@@ -52,6 +52,7 @@ import com.bober.managerfull.ui.components.mapScreen.EditInfoDialogWardrobe
 import com.bober.managerfull.ui.components.mapScreen.EmployedInfoDialog
 import com.bober.managerfull.ui.components.mapScreen.NumberSelectionFab
 import com.bober.managerfull.ui.components.mapScreen.SearchButton
+import com.bober.managerfull.ui.components.mapScreen.SearchDialog
 import com.bober.managerfull.ui.components.mapScreen.WardrobeInfoDialog
 import com.bober.managerfull.ui.components.mapScreen.WardrobePoint
 import com.bober.managerfull.ui.components.mapScreen.WorkstationPoint
@@ -100,6 +101,9 @@ fun OfficeMapScreen(
     var editWardrobeName by remember { mutableStateOf("") }
     var editWardrobeContent by remember { mutableStateOf("") }
 
+
+    var showSearchDialog by remember { mutableStateOf(false) }
+    var selectedSearchItem by remember { mutableStateOf<Any?>(null) }
 
     // Получаем текущие рабочие места и шкафы для активного этажа
     val currentWorkstations = when (floorState.value) {
@@ -306,17 +310,45 @@ fun OfficeMapScreen(
                             }
                     )
                 }
+            }
 
-                // Кнопка выбора этажа
-                NumberSelectionFab(
-                    modifier = Modifier.align(Alignment.BottomEnd),
+            // Кнопка выбора этажа
+            NumberSelectionFab(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                viewModel = viewModel,
+            )
+            SearchButton(
+                modifier = Modifier.align(Alignment.BottomStart),
+                viewModel = viewModel,
+                onClick = { showSearchDialog = true }
+            )
+
+            if (showSearchDialog) {
+                SearchDialog(
                     viewModel = viewModel,
-                )
-                SearchButton(
-                    modifier = Modifier.align(Alignment.BottomStart),
-                    viewModel = viewModel,
+                    onDismiss = { showSearchDialog = false },
+                    onItemSelected = { item, floorState ->
+                        selectedSearchItem = item
+                        // Переключаем этаж перед выбором элемента
+                        viewModel.updateFloorState(floorState)
+
+                        when (item) {
+                            is Workstation -> {
+                                selectedWorkstation = item
+                                selectedWorkstationForEdit = null
+                                selectedWardrobe = null
+                            }
+                            is Wardrobe -> {
+                                selectedWardrobe = item
+                                selectedWorkstation = null
+                                selectedWorkstationForEdit = null
+                            }
+                        }
+                        showSearchDialog = false
+                    }
                 )
             }
+
 
             if (showEditDialog && selectedWorkstationForEdit != null) {
                 EditInfoDialog(
@@ -341,7 +373,7 @@ fun OfficeMapScreen(
                             workstationId = selectedWorkstationForEdit?.id ?: "",
                             employeeName = name,
                             position = position,
-                            number = number // Передаем номер
+                            number = number
                         )
                         showEditDialog = false
                     }
@@ -377,7 +409,8 @@ fun OfficeMapScreen(
                 )
             }
             selectedWorkstation?.let { workstation ->
-                val updatedWorkstation = currentWorkstations?.find { it.id == workstation.id } ?: workstation
+                val updatedWorkstation =
+                    currentWorkstations?.find { it.id == workstation.id } ?: workstation
                 EmployedInfoDialog(
                     workstation = updatedWorkstation,
                     onDismiss = { selectedWorkstation = null },
