@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.bober.managerfull.network.WorkstationService
 import kotlinx.coroutines.launch
 
-class OfficeViewModel: ViewModel() {
+class OfficeViewModel : ViewModel() {
 //    init {
 //        initializeWorkstation()
 //        initializeWardrobe()

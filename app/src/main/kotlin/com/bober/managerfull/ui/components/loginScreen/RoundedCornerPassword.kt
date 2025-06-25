@@ -45,7 +45,9 @@ fun RoundedCornerPassword(
     focusRequester: FocusRequester = remember { FocusRequester() },
     modifier: Modifier = Modifier,
 ) {
+
     val isPasswordVisible = remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,12 +64,12 @@ fun RoundedCornerPassword(
                 val noSpacesValue = newValue.replace(" ", "")
                 onValueChange(noSpacesValue)
             },
-            shape = RoundedCornerShape(8.dp), // Изменяем скругление на 12.dp
+            shape = RoundedCornerShape(8.dp),
             colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = GrayExtraDark, // White30
-                focusedContainerColor = GrayExtraDark.copy(alpha = 0.9f),  // White40
-                unfocusedIndicatorColor = Color.Transparent, // Убираем нижнее подчеркивание
-                focusedIndicatorColor = Color.Transparent,   // Убираем нижнее подчеркивание
+                unfocusedContainerColor = GrayExtraDark,
+                focusedContainerColor = GrayExtraDark.copy(alpha = 0.9f),
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
                 unfocusedTextColor = Hint.copy(alpha = 0.8f),
                 focusedTextColor = White,
                 unfocusedPlaceholderColor = White.copy(alpha = 0.6f),
@@ -101,7 +103,8 @@ fun RoundedCornerPassword(
                                 id = if (isPasswordVisible.value) R.drawable.open_eye
                                 else R.drawable.close_eye
                             ),
-                            contentDescription = "Показать пароль"
+                            contentDescription = "Показать пароль",
+                            tint = Hint.copy(alpha = 0.8f)
                         )
                     }
                 }

@@ -120,48 +120,49 @@ class WorkstationService {
 
 
     suspend fun getCoworkingWorkStations(): FloorModel? {
+
         val dataGet = database.collection(collectionName).document("coworking").get().await()
 
         return dataGet.toObject(FloorModel::class.java)
-
     }
 
     suspend fun getFloorThreeWorkStation(): FloorModel? {
+
         val dataGet = database.collection(collectionName).document("floor3").get().await()
 
         return dataGet.toObject(FloorModel::class.java)
-
     }
 
     suspend fun getFloorFourWorkStation(): FloorModel? {
+
         val dataGet = database.collection(collectionName).document("floor4").get().await()
 
         return dataGet.toObject(FloorModel::class.java)
-
     }
 
     suspend fun getFloorSixWorkStation(): FloorModel? {
+
         val dataGet = database.collection(collectionName).document("floor6").get().await()
 
         return dataGet.toObject(FloorModel::class.java)
-
     }
 
     suspend fun getConferenceFourWorkStations(): FloorModel? {
+
         val dataGet = database.collection(collectionName).document("conference4").get().await()
 
         return dataGet.toObject(FloorModel::class.java)
-
     }
 
     suspend fun getConferenceSixWorkStations(): FloorModel? {
+
         val dataGet = database.collection(collectionName).document("conference6").get().await()
 
         return dataGet.toObject(FloorModel::class.java)
-
     }
 
     suspend fun getFloorIdForWorkstation(workstationId: String): String {
+
         val floors = listOf("coworking", "floor3", "floor4", "floor6", "conference4", "conference6")
 
         return floors.firstOrNull { floorId ->
@@ -172,6 +173,7 @@ class WorkstationService {
     }
 
     suspend fun getFloorIdForWardrobe(wardrobeId: String): String {
+
         val floors = listOf("coworking", "floor3", "floor4", "floor6", "conference4", "conference6")
 
         return floors.firstOrNull { floorId ->
@@ -180,7 +182,6 @@ class WorkstationService {
                 ?.wardrobe?.any { it.id == wardrobeId } == true
         } ?: "coworking"
     }
-
 
     suspend fun updateWorkstation(
         floorId: String,
@@ -199,13 +200,10 @@ class WorkstationService {
         )
 
         val floorRef = database.collection(collectionName).document(floorId)
-
-        // Получаем текущие данные
         val floorSnapshot = floorRef.get().await()
         val workstations = floorSnapshot.get("workstations") as? List<Map<String, Any>>
             ?: throw IllegalStateException("Workstations data is missing")
 
-        // Обновляем нужную рабочую станцию
         val updatedWorkstations = workstations.map { workstation ->
             if (workstation["id"] == workstationId) {
                 mutableMapOf<String, Any>().apply {
@@ -221,11 +219,10 @@ class WorkstationService {
                 workstation
             }
         }
-
-        // Обновляем документ в Firestore
         floorRef.update("workstations", updatedWorkstations).await()
         Log.d("WorkstationService", "Workstation $workstationId updated successfully")
     }
+
     suspend fun updateWardrobe(
         floorId: String,
         wardrobeId: String,
@@ -233,6 +230,7 @@ class WorkstationService {
         content: String,
         additionalFields: List<String>
     ) {
+
         val floorRef = database.collection(collectionName2).document(floorId)
         val floorSnapshot = floorRef.get().await()
         val wardrobes = floorSnapshot.get("wardrobe") as? List<Map<String, Any>>
@@ -252,13 +250,12 @@ class WorkstationService {
                 wardrobe
             }
         }
-
         floorRef.update("wardrobe", updatedWardrobes).await()
     }
+
     suspend fun getAllWorkstationsAndWardrobes(): List<Any> {
         val allItems = mutableListOf<Any>()
 
-        // Получаем все рабочие места
         val floors = listOf(
             "coworking", "floor3", "floor4", "floor6", "conference4", "conference6"
         )
@@ -272,7 +269,6 @@ class WorkstationService {
                 .toObject(FloorModelWardrobe::class.java)
             wardrobeFloor?.wardrobe?.let { allItems.addAll(it) }
         }
-
         return allItems
     }
 }

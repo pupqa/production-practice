@@ -3,15 +3,13 @@ package com.bober.managerfull.ui.components.mapScreen
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.material3.Text
-
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +37,7 @@ fun WardrobePoint(
         Log.d("WardropePoint", "Setting color to RED (free) for ${wardrobe.id}")
         Color.Green.copy(alpha = 0.7f)
     }
+
     Box(
         modifier = modifier
             .size(28.dp)

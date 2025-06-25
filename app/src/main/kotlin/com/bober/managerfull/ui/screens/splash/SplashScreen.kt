@@ -18,6 +18,7 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     navController: NavHostController,
 ) {
+
     LaunchedEffect(Unit) {
         delay(2000)
         navController.navigate(SignInRoute) {
@@ -27,6 +28,7 @@ fun SplashScreen(
             launchSingleTop = true
         }
     }
+
     Box(
         Modifier
             .fillMaxSize()
@@ -36,14 +38,9 @@ fun SplashScreen(
 
         VideoPlayerScreen(
             videoResId = R.raw.video,
-            modifier = Modifier.fillMaxSize(0.9f),
+            modifier = Modifier.fillMaxSize(0.8f),
             autoPlay = true,
             loop = true
         )
-        /* Image(
-            painter = painterResource(R.drawable.logo_code_inside),
-            modifier = Modifier.fillMaxWidth(0.6f),
-            contentDescription = null
-           ) */
     }
 }

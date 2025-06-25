@@ -1,5 +1,6 @@
 package com.bober.managerfull.ui.screens.officeMap
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,8 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,10 +26,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -42,8 +39,6 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.bober.managerfull.OfficeViewModel
 import com.bober.managerfull.R
-import com.bober.managerfull.model.FloorModel
-import com.bober.managerfull.model.FloorModelWardrobe
 import com.bober.managerfull.model.OperationState
 import com.bober.managerfull.model.Wardrobe
 import com.bober.managerfull.model.Workstation
@@ -58,6 +53,7 @@ import com.bober.managerfull.ui.components.mapScreen.WardrobePoint
 import com.bober.managerfull.ui.components.mapScreen.WorkstationPoint
 import com.bober.managerfull.ui.theme.Yellow
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun OfficeMapScreen(
     navController: NavHostController,
@@ -203,7 +199,7 @@ fun OfficeMapScreen(
                 when (floorState.value) {
                     OperationState.Coworking -> {
                         Image(
-                            painter = painterResource(id = R.drawable.korvorking),
+                            painter = painterResource(id = R.drawable.coworking),
                             contentDescription = "Office Map",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier.fillMaxSize()
@@ -212,7 +208,7 @@ fun OfficeMapScreen(
 
                     OperationState.FloorThree -> {
                         Image(
-                            painter = painterResource(id = R.drawable.flover3),
+                            painter = painterResource(id = R.drawable.floor3),
                             contentDescription = "Office Map",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier.fillMaxSize()
@@ -338,6 +334,7 @@ fun OfficeMapScreen(
                                 selectedWorkstationForEdit = null
                                 selectedWardrobe = null
                             }
+
                             is Wardrobe -> {
                                 selectedWardrobe = item
                                 selectedWorkstation = null

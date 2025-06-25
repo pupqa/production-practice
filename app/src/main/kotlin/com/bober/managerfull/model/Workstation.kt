@@ -11,6 +11,4 @@ data class Workstation(
     val position: String = "",
     val isBusy: Boolean = false,
     val number: String = "",
-
-
 )

@@ -34,6 +34,7 @@ fun NumberSelectionFab(
     modifier: Modifier = Modifier,
     viewModel: OfficeMapScreenViewModel,
 ) {
+
     var expanded by remember { mutableStateOf(false) }
     val floorState by viewModel.floorState.collectAsState()
 

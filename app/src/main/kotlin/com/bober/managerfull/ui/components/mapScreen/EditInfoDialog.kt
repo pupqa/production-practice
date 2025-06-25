@@ -7,21 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Work
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.bober.managerfull.model.Workstation
 
 @Composable
 fun EditInfoDialog(
@@ -46,11 +33,13 @@ fun EditInfoDialog(
     onTitle: (String) -> Unit,
     onDescription: (String) -> Unit,
     onData: (String) -> Unit, // Добавлен callback для инвентарного номера
-    onSave: (String, String, String) -> Unit // Добавлен параметр для номера
+    onSave: (String, String, String) -> Unit, // Добавлен параметр для номера
 ) {
+
     val name = remember { mutableStateOf(title) }
     val position = remember { mutableStateOf(description) }
     val number = remember { mutableStateOf(data) }
+
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties()
@@ -78,6 +67,7 @@ fun EditInfoDialog(
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium
                 )
+
                 TextFields(
                     value = name.value,
                     text = "ФИО",
@@ -86,6 +76,7 @@ fun EditInfoDialog(
                         onTitle(it)
                     }
                 )
+
                 Spacer(modifier = Modifier.height(10.dp))
 
                 TextFields(
@@ -98,8 +89,11 @@ fun EditInfoDialog(
                 )
 
                 Spacer(modifier = Modifier.height(15.dp))
+
                 CustomButton(
-                    title = "Сохранить",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
                     onClick = {
                         onSave(
                             name.value,
@@ -107,9 +101,7 @@ fun EditInfoDialog(
                             number.value
                         )
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                    title = "Сохранить",
                 )
             }
         }

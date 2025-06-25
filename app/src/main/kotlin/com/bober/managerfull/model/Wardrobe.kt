@@ -11,5 +11,5 @@ data class Wardrobe(
     val content: String = "",
     val isBusy: Boolean = false,
     val number: String = "",
-    val additionalFields: List<String> = emptyList() // Для хранения доп. полей
+    val additionalFields: List<String> = emptyList()
 )

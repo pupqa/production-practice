@@ -39,12 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.bober.managerfull.model.Wardrobe
+
 @Composable
 fun WardrobeInfoDialog(
     wardrobe: Wardrobe,
     onDismiss: () -> Unit,
-    onEditInventory: (String) -> Unit
+    onEditInventory: (String) -> Unit,
 ) {
+
     var isEditing by remember { mutableStateOf(false) }
     var tempInventoryNumber by remember { mutableStateOf(wardrobe.wardrobeName) }
 
@@ -125,7 +127,6 @@ fun WardrobeInfoDialog(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                // Модифицированный InfoRow без fillMaxWidth
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier.weight(1f)
@@ -173,15 +174,16 @@ fun WardrobeInfoDialog(
                         )
                     }
 
-                    wardrobe.additionalFields?.takeIf { it.isNotEmpty() }?.forEachIndexed { index, field ->
-                        item {
-                            InfoRow(
-                                icon = Icons.Default.TurnedIn,
-                                title = "Доп. поле ${index + 1}",
-                                value = field
-                            )
+                    wardrobe.additionalFields?.takeIf { it.isNotEmpty() }
+                        ?.forEachIndexed { index, field ->
+                            item {
+                                InfoRow(
+                                    icon = Icons.Default.TurnedIn,
+                                    title = "Доп. содержимое ${index + 1}",
+                                    value = field
+                                )
+                            }
                         }
-                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

@@ -1,6 +1,5 @@
 package com.bober.managerfull.ui.components.mapScreen
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -35,22 +34,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.bober.managerfull.model.Workstation
-
 
 @Composable
 fun EmployedInfoDialog(
     workstation: Workstation,
     onDismiss: () -> Unit,
-    onEditInventory: (String) -> Unit
-
+    onEditInventory: (String) -> Unit,
 ) {
 
     var isEditing by remember { mutableStateOf(false) }
     var tempInventoryNumber by remember { mutableStateOf(workstation.number) }
+
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties()
@@ -66,7 +63,6 @@ fun EmployedInfoDialog(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Заголовок
                 Text(
                     text = "Место: ${workstation.number}",
                     style = MaterialTheme.typography.headlineMedium,
@@ -75,14 +71,12 @@ fun EmployedInfoDialog(
                     textAlign = TextAlign.Center
                 )
 
-                // Разделитель
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = 8.dp),
                     thickness = 1.dp,
                     color = MaterialTheme.colorScheme.outlineVariant
                 )
 
-                // Основная информация
                 Column(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier.fillMaxWidth()
@@ -90,7 +84,7 @@ fun EmployedInfoDialog(
                     InfoRow(
                         icon = Icons.Default.Person,
                         title = "ФИО",
-                        value =  workstation.employeeName
+                        value = workstation.employeeName
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     InfoRow(
@@ -142,7 +136,6 @@ fun EmployedInfoDialog(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            // Модифицированный InfoRow без fillMaxWidth
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.weight(1f)

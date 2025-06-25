@@ -255,10 +255,11 @@ fun SignUpScreen(
                         color = Yellow,
                         fontSize = 16.sp,
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(start = 4.dp)
+                        modifier = Modifier
+                            .padding(start = 4.dp)
                             .clickable {
-                            navController.navigate(SignInRoute)
-                        }
+                                navController.navigate(SignInRoute)
+                            }
                     )
                 }
             }

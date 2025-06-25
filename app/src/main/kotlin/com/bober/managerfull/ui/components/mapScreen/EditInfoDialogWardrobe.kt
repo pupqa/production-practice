@@ -41,6 +41,7 @@ fun EditInfoDialogWardrobe(
     onDescription: (String) -> Unit,
     onSave: (String, String, List<String>) -> Unit,
 ) {
+
     val name = remember { mutableStateOf(title) }
     val content = remember { mutableStateOf(description) }
     val additionalFields = remember { mutableStateListOf<String>().apply { addAll(initialAdditionalFields) } }

@@ -29,6 +29,7 @@ fun WorkstationPoint(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
     Log.d(
         "WorkstationPoint",
         "Workstation ID: ${workstation.id}, " +

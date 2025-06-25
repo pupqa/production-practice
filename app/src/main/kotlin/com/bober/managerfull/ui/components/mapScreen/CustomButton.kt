@@ -22,17 +22,17 @@ fun CustomButton(
 ) {
     Button(
         onClick = onClick,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(56.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Yellow
         ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = 4.dp,
             pressedElevation = 2.dp
-        ),
-        shape = RoundedCornerShape(12.dp),
-        modifier = modifier
-            .fillMaxWidth()
-            .height(56.dp)
+        )
     ) {
         Text(
             text = title,
@@ -40,6 +40,5 @@ fun CustomButton(
             fontSize = 20.sp,
             style = MaterialTheme.typography.bodyMedium
         )
-
     }
 }

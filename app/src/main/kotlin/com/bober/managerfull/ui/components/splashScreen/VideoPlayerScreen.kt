@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,8 +33,9 @@ fun VideoPlayerScreen(
     autoPlay: Boolean = true,
     loop: Boolean = true,
 ) {
+
     val context = LocalContext.current
-    var aspectRatio by remember { mutableStateOf(16f / 9f) }
+    var aspectRatio by remember { mutableFloatStateOf(16f / 9f) }
 
     val exoPlayer = remember {
         ExoPlayer.Builder(context).build().apply {
@@ -50,7 +51,6 @@ fun VideoPlayerScreen(
                     }
                 }
             })
-
             prepare()
             playWhenReady = autoPlay
             repeatMode = if (loop) Player.REPEAT_MODE_ONE else Player.REPEAT_MODE_OFF
@@ -70,7 +70,7 @@ fun VideoPlayerScreen(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
-                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT // Добавьте эту строку
+                    resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
                 }
             },
             modifier = Modifier

@@ -14,6 +14,7 @@ import com.bober.managerfull.ui.screens.splash.SplashScreen
 
 @Composable
 fun Navigation() {
+
     val navController = rememberNavController()
     val viewModelOffice = viewModel<OfficeMapScreenViewModel>()
     val officeViewModel = viewModel<OfficeViewModel>()

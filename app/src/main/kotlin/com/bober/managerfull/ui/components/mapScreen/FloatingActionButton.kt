@@ -20,7 +20,6 @@ fun FloatingActionButtonFun(
     FloatingActionButton(
         onClick = {
             onClick()
-
         },
         containerColor = color,
         modifier = Modifier

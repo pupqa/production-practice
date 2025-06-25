@@ -4,7 +4,6 @@ package com.bober.managerfull.ui.screens.officeMap
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bober.managerfull.model.FloorModel
 import com.bober.managerfull.model.FloorModelWardrobe
 import com.bober.managerfull.model.OperationState
@@ -115,6 +114,7 @@ class OfficeMapScreenViewModel : ViewModel() {
             else -> OperationState.Coworking
         }
     }
+
     fun searchItems(query: String) {
         viewModelScope.launch {
             try {
@@ -126,10 +126,12 @@ class OfficeMapScreenViewModel : ViewModel() {
                                     item.position.contains(query, ignoreCase = true) ||
                                     item.number.contains(query, ignoreCase = true)
                         }
+
                         is Wardrobe -> {
                             item.wardrobeName.contains(query, ignoreCase = true) ||
                                     item.content.contains(query, ignoreCase = true)
                         }
+
                         else -> false
                     }
                 }
@@ -218,7 +220,7 @@ class OfficeMapScreenViewModel : ViewModel() {
         workstationId: String,
         employeeName: String,
         position: String,
-        number: String = ""
+        number: String = "",
     ) {
         viewModelScope.launch {
             try {
@@ -235,12 +237,13 @@ class OfficeMapScreenViewModel : ViewModel() {
             }
         }
     }
+
     fun updateWardrobe(
         floorId: String,
         wardrobeId: String,
         wardrobeName: String,
         content: String,
-        additionalFields: List<String> = emptyList()
+        additionalFields: List<String> = emptyList(),
     ) {
         viewModelScope.launch {
             try {
@@ -295,5 +298,4 @@ class OfficeMapScreenViewModel : ViewModel() {
             }
         }
     }
-
 }
