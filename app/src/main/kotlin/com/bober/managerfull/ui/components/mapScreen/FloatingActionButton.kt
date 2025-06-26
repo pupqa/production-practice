@@ -3,7 +3,8 @@ package com.bober.managerfull.ui.components.mapScreen
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,12 +17,14 @@ fun FloatingActionButtonFun(
     text: String,
     color: Color,
     onClick: () -> Unit,
+    enabled: Boolean
 ) {
-    FloatingActionButton(
+    Button(
         onClick = {
             onClick()
         },
-        containerColor = color,
+        colors = ButtonDefaults.buttonColors(containerColor = color),
+        enabled = enabled,
         modifier = Modifier
             .padding(bottom = 8.dp)
             .border(

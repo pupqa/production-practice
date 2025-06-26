@@ -67,7 +67,53 @@ class OfficeMapScreenViewModel : ViewModel() {
 
     fun updateFloorState(operationState: OperationState) {
         viewModelScope.launch {
+
             _floorState.value = operationState
+
+            when (_floorState.value) {
+                OperationState.Coworking -> _coworking.value = null
+                OperationState.FloorThree -> _floorThree.value = null
+                OperationState.FloorFour -> _floorFour.value = null
+                OperationState.FloorSix -> _floorSix.value = null
+                OperationState.ConferenceFour -> _conferenceFour.value = null
+                OperationState.ConferenceSix -> _conferenceSix.value = null
+            }
+
+            when (_floorState.value) {
+                OperationState.Coworking -> _coworkingW.value = null
+                OperationState.FloorThree -> _floorThreeW.value = null
+                OperationState.FloorFour -> _floorFourW.value = null
+                OperationState.FloorSix -> _floorSixW.value = null
+                OperationState.ConferenceFour -> _conferenceFourW.value = null
+                OperationState.ConferenceSix -> _conferenceSixW.value = null
+            }
+
+            when (operationState) {
+                OperationState.Coworking -> {
+                    getCoworkingWorkstations()
+                    getCoworkingWardrobe()
+                }
+                OperationState.FloorThree -> {
+                    getFloorThreeWorkstation()
+                    getFloorThreeWardrobe()
+                }
+                OperationState.FloorFour -> {
+                    getFloorFourWorkstation()
+                    getFloorFourWardrobe()
+                }
+                OperationState.FloorSix -> {
+                    getFloorSixWorkstation()
+                    getFloorSixWardrobe()
+                }
+                OperationState.ConferenceFour -> {
+                    getConferenceFourWorkstations()
+                    getConferenceFourWardrobe()
+                }
+                OperationState.ConferenceSix -> {
+                    getConferenceSixWorkstations()
+                    getConferenceSixWardrobe()
+                }
+            }
         }
     }
 

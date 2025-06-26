@@ -14,10 +14,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -132,328 +135,358 @@ fun OfficeMapScreen(
         else -> ""
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        // Заголовок этажа
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .fillMaxWidth()
-                .height(headerHeight)
-                .background(Color.Black)
-                .zIndex(2f),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            Spacer(modifier = Modifier.height(32.dp))
-            Box(
-                modifier = Modifier
-                    .padding(bottom = 20.dp)
-                    .clip(shape = RoundedCornerShape(2.dp))
-                    .background(Color.Black)
-                    .border(width = 1.5.dp, color = Yellow.copy(alpha = 0.8f))
-            ) {
-                Text(
-                    text = floorTitle,
-                    color = Yellow,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 30.sp,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                )
+    val isLoading = remember {
+        derivedStateOf {
+            when (floorState.value) {
+                OperationState.Coworking -> coworking.value == null
+                OperationState.FloorThree -> floorThree.value == null
+                OperationState.FloorFour -> floorFour.value == null
+                OperationState.FloorSix -> floorSix.value == null
+                OperationState.ConferenceFour -> conferenceFour.value == null
+                OperationState.ConferenceSix -> conferenceSix.value == null
+                else -> false
             }
         }
+    }.value
 
-        // Основное содержимое карты
+    LaunchedEffect(Unit) {
+        viewModel.updateFloorState(viewModel.floorState.value)
+    }
+
+    if (isLoading) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = headerHeight)
-                .pointerInput(Unit) {
-                    detectTransformGestures { centroid, pan, zoom, rotation ->
-                        val newScale = (scale * zoom).coerceIn(0.5f, 3f)
-                        val maxOffsetX =
-                            if (newScale > 1f) (size.width * (newScale - 1)) * 0.5f else 0f
-                        val maxOffsetY =
-                            if (newScale > 1f) (size.height * (newScale - 1)) * 0.2f else 0f
-                        val newOffsetX = (offset.x + pan.x).coerceIn(-maxOffsetX, maxOffsetX)
-                        val newOffsetY = (offset.y + pan.y).coerceIn(-maxOffsetY, maxOffsetY)
-                        scale = newScale
-                        offset = Offset(newOffsetX, newOffsetY)
-                    }
-                }
+                .background(Color.Black.copy(alpha = 0.5f))
+                .zIndex(3f),
+            contentAlignment = Alignment.Center
         ) {
-            BoxWithConstraints(
+            CircularProgressIndicator(color = Yellow)
+        }
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+        ) {
+            // Заголовок этажа
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .fillMaxWidth()
+                    .height(headerHeight)
+                    .background(Color.Black)
+                    .zIndex(2f),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Spacer(modifier = Modifier.height(32.dp))
+                Box(
+                    modifier = Modifier
+                        .padding(bottom = 20.dp)
+                        .clip(shape = RoundedCornerShape(2.dp))
+                        .background(Color.Black)
+                        .border(width = 1.5.dp, color = Yellow.copy(alpha = 0.8f))
+                ) {
+                    Text(
+                        text = floorTitle,
+                        color = Yellow,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 30.sp,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    )
+                }
+            }
+
+            // Основное содержимое карты
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .graphicsLayer(
-                        scaleX = scale,
-                        scaleY = scale,
-                        translationX = offset.x,
-                        translationY = offset.y
-                    )
+                    .padding(top = headerHeight)
+                    .pointerInput(Unit) {
+                        detectTransformGestures { centroid, pan, zoom, rotation ->
+                            val newScale = (scale * zoom).coerceIn(0.5f, 3f)
+                            val maxOffsetX =
+                                if (newScale > 1f) (size.width * (newScale - 1)) * 0.5f else 0f
+                            val maxOffsetY =
+                                if (newScale > 1f) (size.height * (newScale - 1)) * 0.2f else 0f
+                            val newOffsetX = (offset.x + pan.x).coerceIn(-maxOffsetX, maxOffsetX)
+                            val newOffsetY = (offset.y + pan.y).coerceIn(-maxOffsetY, maxOffsetY)
+                            scale = newScale
+                            offset = Offset(newOffsetX, newOffsetY)
+                        }
+                    }
             ) {
-                // Отображение фона карты в зависимости от этажа
-                when (floorState.value) {
-                    OperationState.Coworking -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.coworking),
-                            contentDescription = "Office Map",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
+                BoxWithConstraints(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer(
+                            scaleX = scale,
+                            scaleY = scale,
+                            translationX = offset.x,
+                            translationY = offset.y
                         )
-                    }
-
-                    OperationState.FloorThree -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.floor3),
-                            contentDescription = "Office Map",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-
-                    OperationState.FloorFour -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.floor4),
-                            contentDescription = "Office Map",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-
-                    OperationState.FloorSix -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.floor6),
-                            contentDescription = "Office Map",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-
-                    OperationState.ConferenceFour -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.conference4),
-                            contentDescription = "Office Map",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-
-                    OperationState.ConferenceSix -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.conference6),
-                            contentDescription = "Office Map",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                    }
-                }
-
-                // Отображение рабочих мест
-                currentWorkstations?.forEach { workstation ->
-                    WorkstationPoint(
-                        workstation = workstation,
-                        onClick = {
-                            selectedWorkstation = workstation
-                            selectedWorkstationForEdit = null
-                            selectedWardrobe = null
-                        },
-                        onLongClick = {
-                            selectedWorkstationForEdit = workstation
-                            selectedWorkstation = null
-                            selectedWardrobe = null
-                            showEditDialog = true
-                        },
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .offset(
-                                x = (workstation.x.toFloat() * maxWidth.value).dp,
-                                y = (workstation.y.toFloat() * maxHeight.value).dp
+                ) {
+                    // Отображение фона карты в зависимости от этажа
+                    when (floorState.value) {
+                        OperationState.Coworking -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.coworking),
+                                contentDescription = "Office Map",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
                             )
-                            .graphicsLayer {
-                                scaleX = pointScale
-                                scaleY = pointScale
-                            }
-                    )
-                }
+                        }
 
-                currentWardrobes?.forEach { wardrobe ->
-                    WardrobePoint(
-                        wardrobe = wardrobe,
-                        onClick = {
-                            selectedWardrobe = wardrobe
-                            selectedWorkstation = null
-                            selectedWorkstationForEdit = null
-                        },
-                        onLongClick = {
-                            selectedWardrobeForEdit = wardrobe
-                            selectedWardrobe = null
-                            selectedWorkstation = null
-                            showWardrobeEditDialog = true
-                        },
-                        modifier = Modifier
-                            .align(Alignment.TopStart)
-                            .offset(
-                                x = (wardrobe.x.toFloat() * maxWidth.value).dp,
-                                y = (wardrobe.y.toFloat() * maxHeight.value).dp
+                        OperationState.FloorThree -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.floor3),
+                                contentDescription = "Office Map",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
                             )
-                            .graphicsLayer {
-                                scaleX = pointScale
-                                scaleY = pointScale
-                            }
-                    )
-                }
-            }
+                        }
 
-            // Кнопка выбора этажа
-            NumberSelectionFab(
-                modifier = Modifier.align(Alignment.BottomEnd),
-                viewModel = viewModel,
-            )
-            SearchButton(
-                modifier = Modifier.align(Alignment.BottomStart),
-                viewModel = viewModel,
-                onClick = { showSearchDialog = true }
-            )
+                        OperationState.FloorFour -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.floor4),
+                                contentDescription = "Office Map",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
 
-            if (showSearchDialog) {
-                SearchDialog(
-                    viewModel = viewModel,
-                    onDismiss = { showSearchDialog = false },
-                    onItemSelected = { item, floorState ->
-                        selectedSearchItem = item
-                        // Переключаем этаж перед выбором элемента
-                        viewModel.updateFloorState(floorState)
+                        OperationState.FloorSix -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.floor6),
+                                contentDescription = "Office Map",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
 
-                        when (item) {
-                            is Workstation -> {
-                                selectedWorkstation = item
+                        OperationState.ConferenceFour -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.conference4),
+                                contentDescription = "Office Map",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+
+                        OperationState.ConferenceSix -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.conference6),
+                                contentDescription = "Office Map",
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
+
+                    // Отображение рабочих мест
+                    currentWorkstations?.forEach { workstation ->
+                        WorkstationPoint(
+                            workstation = workstation,
+                            onClick = {
+                                selectedWorkstation = workstation
                                 selectedWorkstationForEdit = null
                                 selectedWardrobe = null
-                            }
+                            },
+                            onLongClick = {
+                                selectedWorkstationForEdit = workstation
+                                selectedWorkstation = null
+                                selectedWardrobe = null
+                                showEditDialog = true
+                            },
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .offset(
+                                    x = (workstation.x.toFloat() * maxWidth.value).dp,
+                                    y = (workstation.y.toFloat() * maxHeight.value).dp
+                                )
+                                .graphicsLayer {
+                                    scaleX = pointScale
+                                    scaleY = pointScale
+                                }
+                        )
+                    }
 
-                            is Wardrobe -> {
-                                selectedWardrobe = item
+                    currentWardrobes?.forEach { wardrobe ->
+                        WardrobePoint(
+                            wardrobe = wardrobe,
+                            onClick = {
+                                selectedWardrobe = wardrobe
                                 selectedWorkstation = null
                                 selectedWorkstationForEdit = null
+                            },
+                            onLongClick = {
+                                selectedWardrobeForEdit = wardrobe
+                                selectedWardrobe = null
+                                selectedWorkstation = null
+                                showWardrobeEditDialog = true
+                            },
+                            modifier = Modifier
+                                .align(Alignment.TopStart)
+                                .offset(
+                                    x = (wardrobe.x.toFloat() * maxWidth.value).dp,
+                                    y = (wardrobe.y.toFloat() * maxHeight.value).dp
+                                )
+                                .graphicsLayer {
+                                    scaleX = pointScale
+                                    scaleY = pointScale
+                                }
+                        )
+                    }
+                }
+
+                // Кнопка выбора этажа
+                NumberSelectionFab(
+                    modifier = Modifier.align(Alignment.BottomEnd),
+                    viewModel = viewModel,
+                )
+                SearchButton(
+                    modifier = Modifier.align(Alignment.BottomStart),
+                    viewModel = viewModel,
+                    onClick = { showSearchDialog = true }
+                )
+
+                if (showSearchDialog) {
+                    SearchDialog(
+                        viewModel = viewModel,
+                        onDismiss = { showSearchDialog = false },
+                        onItemSelected = { item, floorState ->
+                            selectedSearchItem = item
+                            // Переключаем этаж перед выбором элемента
+                            viewModel.updateFloorState(floorState)
+
+                            when (item) {
+                                is Workstation -> {
+                                    selectedWorkstation = item
+                                    selectedWorkstationForEdit = null
+                                    selectedWardrobe = null
+                                }
+
+                                is Wardrobe -> {
+                                    selectedWardrobe = item
+                                    selectedWorkstation = null
+                                    selectedWorkstationForEdit = null
+                                }
                             }
+                            showSearchDialog = false
                         }
-                        showSearchDialog = false
-                    }
-                )
-            }
+                    )
+                }
 
 
-            if (showEditDialog && selectedWorkstationForEdit != null) {
-                EditInfoDialog(
-                    title = selectedWorkstationForEdit?.employeeName ?: "",
-                    description = selectedWorkstationForEdit?.position ?: "",
-                    data = selectedWorkstationForEdit?.number ?: "", // Передаем текущий номер
-                    onDismiss = { showEditDialog = false },
-                    onTitle = { editName = it },
-                    onDescription = { editPosition = it },
-                    onData = { /* Можно сохранить номер в состоянии, если нужно */ },
-                    onSave = { name, position, number ->
-                        viewModel.updateWorkstation(
-                            floorId = when (floorState.value) {
-                                OperationState.Coworking -> "coworking"
-                                OperationState.FloorThree -> "floor3"
-                                OperationState.FloorFour -> "floor4"
-                                OperationState.FloorSix -> "floor6"
-                                OperationState.ConferenceFour -> "conference4"
-                                OperationState.ConferenceSix -> "conference6"
-                                else -> ""
-                            },
-                            workstationId = selectedWorkstationForEdit?.id ?: "",
-                            employeeName = name,
-                            position = position,
-                            number = number
-                        )
-                        showEditDialog = false
-                    }
-                )
-            }
+                if (showEditDialog && selectedWorkstationForEdit != null) {
+                    EditInfoDialog(
+                        title = selectedWorkstationForEdit?.employeeName ?: "",
+                        description = selectedWorkstationForEdit?.position ?: "",
+                        data = selectedWorkstationForEdit?.number ?: "", // Передаем текущий номер
+                        onDismiss = { showEditDialog = false },
+                        onTitle = { editName = it },
+                        onDescription = { editPosition = it },
+                        onData = { /* Можно сохранить номер в состоянии, если нужно */ },
+                        onSave = { name, position, number ->
+                            viewModel.updateWorkstation(
+                                floorId = when (floorState.value) {
+                                    OperationState.Coworking -> "coworking"
+                                    OperationState.FloorThree -> "floor3"
+                                    OperationState.FloorFour -> "floor4"
+                                    OperationState.FloorSix -> "floor6"
+                                    OperationState.ConferenceFour -> "conference4"
+                                    OperationState.ConferenceSix -> "conference6"
+                                    else -> ""
+                                },
+                                workstationId = selectedWorkstationForEdit?.id ?: "",
+                                employeeName = name,
+                                position = position,
+                                number = number
+                            )
+                            showEditDialog = false
+                        }
+                    )
+                }
 
-            if (showWardrobeEditDialog && selectedWardrobeForEdit != null) {
-                EditInfoDialogWardrobe(
-                    title = selectedWardrobeForEdit?.wardrobeName ?: "",
-                    description = selectedWardrobeForEdit?.content ?: "",
-                    initialAdditionalFields = selectedWardrobeForEdit?.additionalFields
-                        ?: emptyList(),
-                    onDismiss = { showWardrobeEditDialog = false },
-                    onTitle = { editWardrobeName = it },
-                    onDescription = { editWardrobeContent = it },
-                    onSave = { name, content, additionalFields ->
-                        viewModel.updateWardrobe(
-                            floorId = when (floorState.value) {
-                                OperationState.Coworking -> "coworking"
-                                OperationState.FloorThree -> "floor3"
-                                OperationState.FloorFour -> "floor4"
-                                OperationState.FloorSix -> "floor6"
-                                OperationState.ConferenceFour -> "conference4"
-                                OperationState.ConferenceSix -> "conference6"
-                                else -> ""
-                            },
-                            wardrobeId = selectedWardrobeForEdit?.id ?: "",
-                            wardrobeName = name,
-                            content = content,
-                            additionalFields = additionalFields
-                        )
-                    }
-                )
-            }
-            selectedWorkstation?.let { workstation ->
-                val updatedWorkstation =
-                    currentWorkstations?.find { it.id == workstation.id } ?: workstation
-                EmployedInfoDialog(
-                    workstation = updatedWorkstation,
-                    onDismiss = { selectedWorkstation = null },
-                    onEditInventory = { newNumber ->
-                        viewModel.updateWorkstation(
-                            floorId = when (floorState.value) {
-                                OperationState.Coworking -> "coworking"
-                                OperationState.FloorThree -> "floor3"
-                                OperationState.FloorFour -> "floor4"
-                                OperationState.FloorSix -> "floor6"
-                                OperationState.ConferenceFour -> "conference4"
-                                OperationState.ConferenceSix -> "conference6"
-                                else -> ""
-                            },
-                            workstationId = updatedWorkstation.id,
-                            employeeName = updatedWorkstation.employeeName,
-                            position = updatedWorkstation.position,
-                            number = newNumber
-                        )
-                    }
-                )
-            }
+                if (showWardrobeEditDialog && selectedWardrobeForEdit != null) {
+                    EditInfoDialogWardrobe(
+                        title = selectedWardrobeForEdit?.wardrobeName ?: "",
+                        description = selectedWardrobeForEdit?.content ?: "",
+                        initialAdditionalFields = selectedWardrobeForEdit?.additionalFields
+                            ?: emptyList(),
+                        onDismiss = { showWardrobeEditDialog = false },
+                        onTitle = { editWardrobeName = it },
+                        onDescription = { editWardrobeContent = it },
+                        onSave = { name, content, additionalFields ->
+                            viewModel.updateWardrobe(
+                                floorId = when (floorState.value) {
+                                    OperationState.Coworking -> "coworking"
+                                    OperationState.FloorThree -> "floor3"
+                                    OperationState.FloorFour -> "floor4"
+                                    OperationState.FloorSix -> "floor6"
+                                    OperationState.ConferenceFour -> "conference4"
+                                    OperationState.ConferenceSix -> "conference6"
+                                    else -> ""
+                                },
+                                wardrobeId = selectedWardrobeForEdit?.id ?: "",
+                                wardrobeName = name,
+                                content = content,
+                                additionalFields = additionalFields
+                            )
+                        }
+                    )
+                }
+                selectedWorkstation?.let { workstation ->
+                    val updatedWorkstation =
+                        currentWorkstations?.find { it.id == workstation.id } ?: workstation
+                    EmployedInfoDialog(
+                        workstation = updatedWorkstation,
+                        onDismiss = { selectedWorkstation = null },
+                        onEditInventory = { newNumber ->
+                            viewModel.updateWorkstation(
+                                floorId = when (floorState.value) {
+                                    OperationState.Coworking -> "coworking"
+                                    OperationState.FloorThree -> "floor3"
+                                    OperationState.FloorFour -> "floor4"
+                                    OperationState.FloorSix -> "floor6"
+                                    OperationState.ConferenceFour -> "conference4"
+                                    OperationState.ConferenceSix -> "conference6"
+                                    else -> ""
+                                },
+                                workstationId = updatedWorkstation.id,
+                                employeeName = updatedWorkstation.employeeName,
+                                position = updatedWorkstation.position,
+                                number = newNumber
+                            )
+                        }
+                    )
+                }
 
-            selectedWardrobe?.let { wardrobe ->
-                val updatedWardrobe = currentWardrobes?.find { it.id == wardrobe.id } ?: wardrobe
-                WardrobeInfoDialog(
-                    wardrobe = updatedWardrobe,
-                    onDismiss = { selectedWardrobe = null },
-                    onEditInventory = { newInventoryNumber ->
-                        viewModel.updateWardrobe(
-                            floorId = when (floorState.value) {
-                                OperationState.Coworking -> "coworking"
-                                OperationState.FloorThree -> "floor3"
-                                OperationState.FloorFour -> "floor4"
-                                OperationState.FloorSix -> "floor6"
-                                OperationState.ConferenceFour -> "conference4"
-                                OperationState.ConferenceSix -> "conference6"
-                                else -> ""
-                            },
-                            wardrobeId = updatedWardrobe.id,
-                            wardrobeName = newInventoryNumber,
-                            content = updatedWardrobe.content,
-                            additionalFields = updatedWardrobe.additionalFields
-                        )
-                    }
-                )
+                selectedWardrobe?.let { wardrobe ->
+                    val updatedWardrobe = currentWardrobes?.find { it.id == wardrobe.id } ?: wardrobe
+                    WardrobeInfoDialog(
+                        wardrobe = updatedWardrobe,
+                        onDismiss = { selectedWardrobe = null },
+                        onEditInventory = { newInventoryNumber ->
+                            viewModel.updateWardrobe(
+                                floorId = when (floorState.value) {
+                                    OperationState.Coworking -> "coworking"
+                                    OperationState.FloorThree -> "floor3"
+                                    OperationState.FloorFour -> "floor4"
+                                    OperationState.FloorSix -> "floor6"
+                                    OperationState.ConferenceFour -> "conference4"
+                                    OperationState.ConferenceSix -> "conference6"
+                                    else -> ""
+                                },
+                                wardrobeId = updatedWardrobe.id,
+                                wardrobeName = newInventoryNumber,
+                                content = updatedWardrobe.content,
+                                additionalFields = updatedWardrobe.additionalFields
+                            )
+                        }
+                    )
+                }
             }
         }
     }

@@ -16,6 +16,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +38,19 @@ fun NumberSelectionFab(
 
     var expanded by remember { mutableStateOf(false) }
     val floorState by viewModel.floorState.collectAsState()
+    val isLoading = remember {
+        derivedStateOf {
+            when (floorState) {
+                OperationState.Coworking -> viewModel.coworking.value == null
+                OperationState.FloorThree -> viewModel.floorThree.value == null
+                OperationState.FloorFour -> viewModel.floorFour.value == null
+                OperationState.FloorSix -> viewModel.floorSix.value == null
+                OperationState.ConferenceFour -> viewModel.conferenceFour.value == null
+                OperationState.ConferenceSix -> viewModel.conferenceSix.value == null
+                else -> false
+            }
+        }
+    }.value
 
     Column(
         horizontalAlignment = Alignment.End,
@@ -66,48 +80,21 @@ fun NumberSelectionFab(
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
-                FloatingActionButtonFun(
-                    text = "К",
-                    color = if (floorState == OperationState.Coworking) Gray else Color.White,
-                    onClick = {
-                        viewModel.updateFloorState(OperationState.Coworking)
-                    }
-                )
-                FloatingActionButtonFun(
-                    text = "3",
-                    color = if (floorState == OperationState.FloorThree) Gray else Color.White,
-                    onClick = {
-                        viewModel.updateFloorState(OperationState.FloorThree)
-                    }
-                )
-                FloatingActionButtonFun(
-                    text = "4",
-                    color = if (floorState == OperationState.FloorFour) Gray else Color.White,
-                    onClick = {
-                        viewModel.updateFloorState(OperationState.FloorFour)
-                    }
-                )
-                FloatingActionButtonFun(
-                    text = "6",
-                    color = if (floorState == OperationState.FloorSix) Gray else Color.White,
-                    onClick = {
-                        viewModel.updateFloorState(OperationState.FloorSix)
-                    }
-                )
-                FloatingActionButtonFun(
-                    text = "П4",
-                    color = if (floorState == OperationState.ConferenceFour) Gray else Color.White,
-                    onClick = {
-                        viewModel.updateFloorState(OperationState.ConferenceFour)
-                    }
-                )
-                FloatingActionButtonFun(
-                    text = "П6",
-                    color = if (floorState == OperationState.ConferenceSix) Gray else Color.White,
-                    onClick = {
-                        viewModel.updateFloorState(OperationState.ConferenceSix)
-                    }
-                )
+                listOf(
+                    OperationState.Coworking to "К",
+                    OperationState.FloorThree to "3",
+                    OperationState.FloorFour to "4",
+                    OperationState.FloorSix to "6",
+                    OperationState.ConferenceFour to "П4",
+                    OperationState.ConferenceSix to "П6"
+                ).forEach { (state, text) ->
+                    FloatingActionButtonFun(
+                        text = text,
+                        color = if (floorState == state) Gray else Color.White,
+                        onClick = { viewModel.updateFloorState(state) },
+                        enabled = !isLoading
+                    )
+                }
             }
         }
     }
