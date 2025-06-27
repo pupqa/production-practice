@@ -64,7 +64,7 @@ fun EmployedInfoDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Место: ${workstation.number}",
+                    text = "Место: ${workstation.id}",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 16.dp),

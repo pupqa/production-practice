@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bober.managerfull.model.Workstation
 
 @Composable
@@ -87,6 +88,7 @@ fun WorkstationPoint(
             Text(
                 text = workstation.id,
                 color = Color.White,
+                fontSize = 10.sp,
                 style = MaterialTheme.typography.labelSmall.copy(
                     fontWeight = FontWeight.Bold,
                     shadow = Shadow(
